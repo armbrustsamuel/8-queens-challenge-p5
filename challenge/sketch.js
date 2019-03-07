@@ -1,5 +1,14 @@
+let queen;
+
 function setup() {
-  createCanvas(1280, 960);
+
+  let canvas = createCanvas(1280, 960);
+  canvas.position(10, 10);
+  canvas.class("lemon");
+
+  queen = new Queen(50,50,50);
+  queen.setPosition(110,110);
+  queen.show();
 }
 
 const black = [255,255,255];
@@ -19,6 +28,10 @@ function sel_color(cor) {
   return color;
 }
 
+function mousePressed(){
+  queen.clicked();
+}
+
 function draw() {
   var index = 0;
   for (var i = 0; i <= size-1; i++) {
@@ -29,4 +42,35 @@ function draw() {
     }
     color = sel_color(color[0]);
   }
+}
+
+class Queen{
+  constructor(x,y) {
+    this.x = x;
+    this.y = y;
+  }
+
+  setPosition(x,y){
+    this.py = y;
+    this.px = x;
+  }
+
+  clicked(){
+    let d = dist(mouseX, mouseY, this.px, this.py);
+    if (d < this.x){
+      console.log("queen pressed");
+    }
+  }
+
+  move(x,y){
+    this.x = this.x + x;
+    this.y = this.y + y;
+  }
+
+  show() {
+    let img = createImg("../img/queen.png")
+    img.size(this.x,this.y)
+    img.position(this.px, this.py);
+  }
+
 }
