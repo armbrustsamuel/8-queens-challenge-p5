@@ -1,23 +1,33 @@
 let queen;
 
-function setup() {
+var queenList = [];
 
-  let canvas = createCanvas(1280, 960);
-  canvas.position(10, 10);
-  canvas.class("lemon");
-
-  queen = new Queen(50,50,50);
-  queen.setPosition(110,110);
-  queen.show();
-}
-
-const black = [255,255,255];
-const white = [0,0,0];
+const black = [255,100,100];
+const white = [150,150,100];
 
 // 8 x 8 table
 var size = 8;
 var squareSize = 80;
 var color = black;
+
+function fill_list(){
+  for(var i=0; i<8; i++){
+    queenList[i] = Math.floor((Math.random() * 8) + 1);
+  }
+  console.log(queenList);
+}
+
+function setup() {
+
+  let canvas = createCanvas(1280, 960);
+  canvas.position(10, 10);
+  canvas.class("lemon");
+  fill_list()
+
+  queen = new Queen(50,50,50);
+  // queen.setPosition(100,110);
+  // queen.show();
+}
 
 function sel_color(cor) {
   if (cor == 255){
@@ -30,6 +40,8 @@ function sel_color(cor) {
 
 function mousePressed(){
   queen.clicked();
+  // queen.setPosition(mouseX,mouseY);
+  // queen.show();
 }
 
 function draw() {
@@ -39,6 +51,10 @@ function draw() {
       color = sel_color(color[0]);
       fill(color[0],color[1],color[2])
       square((i*squareSize),(j*squareSize),squareSize)
+      if(queenList[i] == j+1){
+        queen.setPosition((i*squareSize+squareSize/3),(j*squareSize+squareSize/3));
+        queen.show();
+      }
     }
     color = sel_color(color[0]);
   }
